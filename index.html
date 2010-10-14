@@ -130,9 +130,12 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-10">#</a> -->
         <!-- </div> -->
-        <p> Now for the main highlight: This line simply does two things:
- 1. It adds <code>Shield::Helpers</code> to your Sinatra app&rsquo;s helpers.
- 2. It adds <code>Shield::Login</code> as a middleware for your application.</p>
+        <p> Now for the main highlight: This line simply does two things:</p>
+
+<ol>
+<li>It adds <code>Shield::Helpers</code> to your Sinatra app&rsquo;s helpers.</li>
+<li>It adds <code>Shield::Login</code> as a middleware for your application.</li>
+</ol>
       </td>
       <td class=code>
         <div class='highlight'><pre>  <span class="n">register</span> <span class="no">Shield</span></pre></div>
@@ -143,7 +146,7 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-11">#</a> -->
         <!-- </div> -->
-        <p> This is a normal sinatra route. No authentication is needed here.</p>
+        <p> This is a normal Sinatra route. No authentication is needed here.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>  <span class="n">get</span> <span class="s2">&quot;/public&quot;</span> <span class="k">do</span>
@@ -156,7 +159,7 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-12">#</a> -->
         <!-- </div> -->
-        <p> This is a private sinatra route, which we enforce using
+        <p> This is a private Sinatra route, which we enforce using
  <code>ensure_authenticated</code>. This method comes from <code>Shield::Helpers</code> along
  with some other helper methods:</p>
 
