@@ -50,7 +50,8 @@
         <!--   <a class="octothorpe" href="#section-3">#</a> -->
         <!-- </div> -->
         <p> <a href="http://ohm.keyvalue.org">Ohm</a> is a very lightweight Object mapping library using Redis as the
- backend.</p>
+ backend. Like Sinatra, it is very simple and has inspired several closely
+ similar libraries like <a href="http://github.com/maritz/nohm">Nohm</a>, <a href="http://github.com/xetorthio/johm">Johm</a> and <a href="http://github.com/iamteem/redisco">Redisco</a>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre></pre></div>
@@ -126,8 +127,7 @@
  pre-made solutions in <a href="http://github.com/cyx/shield-contrib">shield-contrib</a>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="kp">extend</span> <span class="no">Shield</span><span class="o">::</span><span class="no">Model</span>
-  </pre></div>
+        <div class='highlight'><pre>  <span class="kp">extend</span> <span class="no">Shield</span><span class="o">::</span><span class="no">Model</span></pre></div>
       </td>
     </tr>
     <tr id='section-10'>
@@ -146,8 +146,7 @@
         <div class='highlight'><pre>  <span class="n">attribute</span> <span class="ss">:email</span>
   <span class="n">index</span> <span class="ss">:email</span>
 
-  <span class="n">attribute</span> <span class="ss">:crypted_password</span>
-  </pre></div>
+  <span class="n">attribute</span> <span class="ss">:crypted_password</span></pre></div>
       </td>
     </tr>
     <tr id='section-11'>
@@ -159,8 +158,8 @@
  find the first user by <code>email</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">fetch</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
-    <span class="n">find</span><span class="p">(</span><span class="ss">:email</span> <span class="o">=&gt;</span> <span class="n">username</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">fetch</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+    <span class="n">find</span><span class="p">(</span><span class="ss">:email</span> <span class="o">=&gt;</span> <span class="n">email</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
   <span class="k">end</span></pre></div>
       </td>
     </tr>
