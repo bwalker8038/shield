@@ -213,10 +213,10 @@
 
 <ol>
 <li>A <code>redirect</code> method exists.</li>
-<li>A <code>request</code> method (which maps to Rack::Request) exists.</li>
+<li>A <code>request</code> method (which maps to <code>Rack::Request</code>) exists.</li>
 <li>A <code>session</code> method exists.</li>
-<li>A <code>User</code> class exists, with a <code>User::[]</code> method that finds any user by
-its ID.</li>
+<li>Your model class, e.g. <code>User</code> has a <code>[]</code> method (i.e. <code>User::[]</code>)
+that finds any user by its ID.</li>
 </ol>
       </td>
       <td class=code>
@@ -270,7 +270,7 @@ its ID.</li>
       </td>
       <td class=code>
         <div class='highlight'><pre>  <span class="n">get</span> <span class="s2">&quot;/dashboard&quot;</span> <span class="k">do</span>
-    <span class="n">ensure_authenticated</span>
+    <span class="n">ensure_authenticated</span><span class="p">(</span><span class="no">User</span><span class="p">)</span>
 
     <span class="s2">&quot;And we&#39;re in! &lt;a href=&#39;/logout&#39;&gt;Logout&lt;/a&gt;&quot;</span>
   <span class="k">end</span></pre></div>
@@ -300,7 +300,7 @@ its ID.</li>
       </td>
       <td class=code>
         <div class='highlight'><pre>  <span class="n">post</span> <span class="s2">&quot;/login&quot;</span> <span class="k">do</span>
-    <span class="k">if</span> <span class="n">login</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:username</span><span class="o">]</span><span class="p">,</span> <span class="n">params</span><span class="o">[</span><span class="ss">:password</span><span class="o">]</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">login</span><span class="p">(</span><span class="no">User</span><span class="p">,</span> <span class="n">params</span><span class="o">[</span><span class="ss">:username</span><span class="o">]</span><span class="p">,</span> <span class="n">params</span><span class="o">[</span><span class="ss">:password</span><span class="o">]</span><span class="p">)</span>
       <span class="n">redirect</span> <span class="s2">&quot;/dashboard&quot;</span>
     <span class="k">else</span>
       <span class="vi">@error</span> <span class="o">=</span> <span class="s2">&quot;Wrong Username and/or Password combination.&quot;</span>
@@ -319,7 +319,7 @@ its ID.</li>
       </td>
       <td class=code>
         <div class='highlight'><pre>  <span class="n">get</span> <span class="s2">&quot;/logout&quot;</span> <span class="k">do</span>
-    <span class="n">logout</span>
+    <span class="n">logout</span><span class="p">(</span><span class="no">User</span><span class="p">)</span>
     <span class="n">redirect</span> <span class="s2">&quot;/&quot;</span>
   <span class="k">end</span>
 <span class="k">end</span></pre></div>
