@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html;charset=utf-8">
-  <title>sinatra-ohm.rb</title>
+  <title>sinatra-sequel.rb</title>
   <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
   <table cellspacing=0 cellpadding=0>
   <thead>
     <tr>
-      <th class=docs><h1>sinatra-ohm.rb</h1></th>
+      <th class=docs><h1>sinatra-sequel.rb</h1></th>
       <th class=code></th>
     </tr>
   </thead>
@@ -49,9 +49,9 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-3">#</a> -->
         <!-- </div> -->
-        <p> <a href="http://ohm.keyvalue.org">Ohm</a> is a very lightweight Object mapping library using Redis as the
- backend. Like Sinatra, it is very simple and has inspired several closely
- similar libraries like <a href="http://github.com/maritz/nohm">Nohm</a>, <a href="http://github.com/xetorthio/johm">Johm</a> and <a href="http://github.com/iamteem/redisco">Redisco</a>.</p>
+        <p> <a href="http://sequel.rubyforge.org">Sequel</a> is a lightweight database toolkit for Ruby. One of the most
+ enticing things about Sequel is that it boasts a really pluggale architecture,
+ and that is evident through its heavy use of plugins.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre></pre></div>
@@ -62,7 +62,7 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-4">#</a> -->
         <!-- </div> -->
-        <h1>Walkthrough</h1>
+        
       </td>
       <td class=code>
         <div class='highlight'><pre></pre></div>
@@ -73,11 +73,10 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-5">#</a> -->
         <!-- </div> -->
-        <p> <em>A note before we start: You can <a href="http://github.com/cyx/shield/tree/master/examples/sinatra-ohm.rb">view the source</a> of this</em>
- <em>entire example.</em></p>
+        <h1>Walkthrough</h1>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="vg">$:</span><span class="o">.</span><span class="n">unshift</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="s2">&quot;../lib&quot;</span><span class="p">,</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)))</span></pre></div>
+        <div class='highlight'><pre></pre></div>
       </td>
     </tr>
     <tr id='section-6'>
@@ -85,13 +84,11 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-6">#</a> -->
         <!-- </div> -->
-        <p> For our example, we&rsquo;ll need <code>sinatra</code>, <code>ohm</code>, <code>shield</code> and <code>haml</code>.</p>
+        <p> <em>A note before we start: You can <a href="http://github.com/cyx/shield/tree/master/examples/sinatra-sequel.rb">view the source</a> of this</em>
+ <em>entire example.</em></p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="nb">require</span> <span class="s2">&quot;sinatra&quot;</span>
-<span class="nb">require</span> <span class="s2">&quot;ohm&quot;</span>
-<span class="nb">require</span> <span class="s2">&quot;shield&quot;</span>
-<span class="nb">require</span> <span class="s2">&quot;haml&quot;</span></pre></div>
+        <div class='highlight'><pre><span class="vg">$:</span><span class="o">.</span><span class="n">unshift</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="s2">&quot;../lib&quot;</span><span class="p">,</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)))</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>
@@ -99,10 +96,13 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-7">#</a> -->
         <!-- </div> -->
-        <h2>The User model</h2>
+        <p> For our example, we&rsquo;ll need <code>sinatra</code>, <code>sequel</code>, <code>shield</code> and <code>haml</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="s2">&quot;sinatra&quot;</span>
+<span class="nb">require</span> <span class="s2">&quot;sequel&quot;</span>
+<span class="nb">require</span> <span class="s2">&quot;shield&quot;</span>
+<span class="nb">require</span> <span class="s2">&quot;haml&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
@@ -110,11 +110,12 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-8">#</a> -->
         <!-- </div> -->
-        <p> We declare our <code>User</code> class to have only the absolute minimum (which is
- realistic and can be used in the real world).</p>
+        <p> This is just the standard way of configuring your <a href="http://sequel.rubyforge.org">Sequel</a>
+ connection. Here, we use an in-memory Sequel database for the purposes of
+ our demo.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">Ohm</span><span class="o">::</span><span class="no">Model</span></pre></div>
+        <div class='highlight'><pre><span class="no">DB</span> <span class="o">=</span> <span class="no">Sequel</span><span class="o">.</span><span class="n">sqlite</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
@@ -122,12 +123,10 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-9">#</a> -->
         <!-- </div> -->
-        <p> <code>Shield::Model</code> adds an <code>authenticate</code> method to your model. You&rsquo;ll
- need to implement <code>fetch</code> yourself, or you can check out some of the
- pre-made solutions in <a href="http://github.com/cyx/shield-contrib">shield-contrib</a>.</p>
+        <h2>The User Model</h2>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="kp">extend</span> <span class="no">Shield</span><span class="o">::</span><span class="no">Model</span></pre></div>
+        <div class='highlight'><pre></pre></div>
       </td>
     </tr>
     <tr id='section-10'>
@@ -135,18 +134,12 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-10">#</a> -->
         <!-- </div> -->
-        <p> In <a href="http://ohm.keyvalue.org">Ohm</a>, you declare all your attributes (different from the usual
- ActiveRecord or Sequel style).</p>
-
-<p> Here we just declare our <code>email</code> and <code>crypted_password</code> fields. We also
- make sure that we can search users by their <code>email</code> by declaring it as an
- <code>index</code>.</p>
+        <p> Our <code>User</code> model will need only the <code>schema</code> plugin for our minimalistic
+ example.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="n">attribute</span> <span class="ss">:email</span>
-  <span class="n">index</span> <span class="ss">:email</span>
-
-  <span class="n">attribute</span> <span class="ss">:crypted_password</span></pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">Sequel</span><span class="o">::</span><span class="no">Model</span>
+  <span class="n">plugin</span> <span class="ss">:schema</span></pre></div>
       </td>
     </tr>
     <tr id='section-11'>
@@ -154,12 +147,19 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-11">#</a> -->
         <!-- </div> -->
-        <p> The <code>fetch</code> protocol is actually really simple to implement. Here we just
- find the first user by <code>email</code>.</p>
+        <p> All code here is mostly boilerplate just to create the table and define
+ the schema. The only relation it has to <a href="http://github.com/cyx/shield">Shield</a> is that the
+ columns are what we would normally expect on our <code>User</code> model.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">fetch</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
-    <span class="n">find</span><span class="p">(</span><span class="ss">:email</span> <span class="o">=&gt;</span> <span class="n">email</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+        <div class='highlight'><pre>  <span class="k">unless</span> <span class="n">table_exists?</span>
+    <span class="n">set_schema</span> <span class="k">do</span>
+      <span class="n">primary_key</span> <span class="ss">:id</span>
+      <span class="n">text</span> <span class="ss">:email</span>
+      <span class="n">text</span> <span class="ss">:crypted_password</span>
+    <span class="k">end</span>
+
+    <span class="n">create_table</span>
   <span class="k">end</span></pre></div>
       </td>
     </tr>
@@ -168,16 +168,11 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-12">#</a> -->
         <!-- </div> -->
-        <p> This isn&rsquo;t required in any way by <code>Shield</code> but this is the most simple and
- straightforward way to do password storage.</p>
+        <p> This marks the start of our <code>Shield::Model</code> integration. This gives us a
+ <code>User::authenticate</code> method which accepts a <code>username</code> and <code>password</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">password</span><span class="o">=</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
-    <span class="n">write_local</span><span class="p">(</span><span class="ss">:crypted_password</span><span class="p">,</span> <span class="no">Shield</span><span class="o">::</span><span class="no">Password</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">password</span><span class="p">))</span>
-
-    <span class="vi">@password</span> <span class="o">=</span> <span class="n">password</span>
-  <span class="k">end</span>
-<span class="k">end</span></pre></div>
+        <div class='highlight'><pre>  <span class="kp">extend</span> <span class="no">Shield</span><span class="o">::</span><span class="no">Model</span></pre></div>
       </td>
     </tr>
     <tr id='section-13'>
@@ -185,16 +180,48 @@
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-13">#</a> -->
         <!-- </div> -->
-        <h2>Using it with a Sinatra app</h2>
+        <p> In order to complete the implementation of <code>User::authenticate</code>, we simply
+ have to define our strategy of fetching a <code>User</code> given the login name,
+ which for our demo is the <code>email</code> of the <code>User</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">fetch</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+    <span class="n">first</span><span class="p">(</span><span class="ss">:email</span> <span class="o">=&gt;</span> <span class="n">email</span><span class="p">)</span>
+  <span class="k">end</span></pre></div>
       </td>
     </tr>
     <tr id='section-14'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
         <!--   <a class="octothorpe" href="#section-14">#</a> -->
+        <!-- </div> -->
+        <p> This isn&rsquo;t required in any way by <code>Shield</code> but this is the most simple and
+ straightforward way to do password storage.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">password</span><span class="o">=</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">crypted_password</span> <span class="o">=</span> <span class="no">Shield</span><span class="o">::</span><span class="no">Password</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+    <span class="vi">@password</span> <span class="o">=</span> <span class="n">password</span>
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <!-- <div class="octowrap"> -->
+        <!--   <a class="octothorpe" href="#section-15">#</a> -->
+        <!-- </div> -->
+        <h2>Using it with a Sinatra app</h2>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <!-- <div class="octowrap"> -->
+        <!--   <a class="octothorpe" href="#section-16">#</a> -->
         <!-- </div> -->
         <p> Now we declare our <a href="http://sinatrarb.com">Sinatra</a> application in the more modular way by
  extending <code>Sinatra::Base</code>.</p>
@@ -203,10 +230,10 @@
         <div class='highlight'><pre><span class="k">class</span> <span class="nc">App</span> <span class="o">&lt;</span> <span class="no">Sinatra</span><span class="o">::</span><span class="no">Base</span></pre></div>
       </td>
     </tr>
-    <tr id='section-15'>
+    <tr id='section-17'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-15">#</a> -->
+        <!--   <a class="octothorpe" href="#section-17">#</a> -->
         <!-- </div> -->
         <p> <code>Shield::Helpers</code> is actually just a simple module with the following
  assumptions:</p>
@@ -223,10 +250,10 @@ that finds any user by its ID.</li>
         <div class='highlight'><pre>  <span class="n">helpers</span> <span class="no">Shield</span><span class="o">::</span><span class="no">Helpers</span></pre></div>
       </td>
     </tr>
-    <tr id='section-16'>
+    <tr id='section-18'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-16">#</a> -->
+        <!--   <a class="octothorpe" href="#section-18">#</a> -->
         <!-- </div> -->
         <p> Like any web application that maintains some kind of state, we&rsquo;ll need
  sessions for this sinatra application.</p>
@@ -235,10 +262,10 @@ that finds any user by its ID.</li>
         <div class='highlight'><pre>  <span class="n">enable</span> <span class="ss">:sessions</span></pre></div>
       </td>
     </tr>
-    <tr id='section-17'>
+    <tr id='section-19'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-17">#</a> -->
+        <!--   <a class="octothorpe" href="#section-19">#</a> -->
         <!-- </div> -->
         <p> We&rsquo;ll also enable <code>:inline_templates</code> for this example to make this a
  one-file ruby application. (See the <code>__END__</code> at the end).</p>
@@ -247,10 +274,10 @@ that finds any user by its ID.</li>
         <div class='highlight'><pre>  <span class="n">enable</span> <span class="ss">:inline_templates</span></pre></div>
       </td>
     </tr>
-    <tr id='section-18'>
+    <tr id='section-20'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-18">#</a> -->
+        <!--   <a class="octothorpe" href="#section-20">#</a> -->
         <!-- </div> -->
         <p> Nothing to see here except that we provide a link to <code>/login</code>.</p>
       </td>
@@ -260,10 +287,10 @@ that finds any user by its ID.</li>
   <span class="k">end</span></pre></div>
       </td>
     </tr>
-    <tr id='section-19'>
+    <tr id='section-21'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-19">#</a> -->
+        <!--   <a class="octothorpe" href="#section-21">#</a> -->
         <!-- </div> -->
         <p> The dashboard is protected via the <code>ensure_authenticated</code> method.
  We also add a <code>logout</code> link.</p>
@@ -276,10 +303,10 @@ that finds any user by its ID.</li>
   <span class="k">end</span></pre></div>
       </td>
     </tr>
-    <tr id='section-20'>
+    <tr id='section-22'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-20">#</a> -->
+        <!--   <a class="octothorpe" href="#section-22">#</a> -->
         <!-- </div> -->
         <p> Our dead-simple login form. Check the <code>@@login</code> section below to see
  the actual <code>haml</code> file.</p>
@@ -290,10 +317,10 @@ that finds any user by its ID.</li>
   <span class="k">end</span></pre></div>
       </td>
     </tr>
-    <tr id='section-21'>
+    <tr id='section-23'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-21">#</a> -->
+        <!--   <a class="octothorpe" href="#section-23">#</a> -->
         <!-- </div> -->
         <p> The crux of the login process appears here. We make use of the
  <code>login</code> method provided by <code>Shield::Helpers</code>.</p>
@@ -309,10 +336,10 @@ that finds any user by its ID.</li>
   <span class="k">end</span></pre></div>
       </td>
     </tr>
-    <tr id='section-22'>
+    <tr id='section-24'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-22">#</a> -->
+        <!--   <a class="octothorpe" href="#section-24">#</a> -->
         <!-- </div> -->
         <p> Finally, a simple logout route which uses <code>logout</code> provided by
  <code>Shield::Helpers</code>.</p>
@@ -321,14 +348,31 @@ that finds any user by its ID.</li>
         <div class='highlight'><pre>  <span class="n">get</span> <span class="s2">&quot;/logout&quot;</span> <span class="k">do</span>
     <span class="n">logout</span><span class="p">(</span><span class="no">User</span><span class="p">)</span>
     <span class="n">redirect</span> <span class="s2">&quot;/&quot;</span>
+  <span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-25'>
+      <td class=docs>
+        <!-- <div class="octowrap"> -->
+        <!--   <a class="octothorpe" href="#section-25">#</a> -->
+        <!-- </div> -->
+        <p> Up until now, most authentication solutions made in Ruby had used the
+ <code>current_user</code> method in the context of controllers and views. We can
+ easily emulate that here by defining it like so:</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">helpers</span> <span class="k">do</span>
+    <span class="k">def</span> <span class="nf">current_user</span>
+      <span class="n">authenticated</span><span class="p">(</span><span class="no">User</span><span class="p">)</span>
+    <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span></pre></div>
       </td>
     </tr>
-    <tr id='section-23'>
+    <tr id='section-26'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-23">#</a> -->
+        <!--   <a class="octothorpe" href="#section-26">#</a> -->
         <!-- </div> -->
         <p> For the purposes of this demo, we&rsquo;ll create a simple user with
  the following credentials.</p>
@@ -340,22 +384,22 @@ that finds any user by its ID.</li>
 <span class="no">User</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:email</span> <span class="o">=&gt;</span> <span class="no">USER</span><span class="p">,</span> <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="no">PASS</span><span class="p">)</span></pre></div>
       </td>
     </tr>
-    <tr id='section-24'>
+    <tr id='section-27'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-24">#</a> -->
+        <!--   <a class="octothorpe" href="#section-27">#</a> -->
         <!-- </div> -->
         <p> This is the usual sinatra idiom, which basically means that
- you can run it by simply doing <code>ruby examples/sinatra-ohm.rb</code>.</p>
+ you can run it by simply doing <code>ruby examples/sinatra-sequel.rb</code>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="no">App</span><span class="o">.</span><span class="n">run!</span> <span class="k">if</span> <span class="bp">__FILE__</span> <span class="o">==</span> <span class="vg">$0</span></pre></div>
       </td>
     </tr>
-    <tr id='section-25'>
+    <tr id='section-28'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-25">#</a> -->
+        <!--   <a class="octothorpe" href="#section-28">#</a> -->
         <!-- </div> -->
         <h2>Running this example in your machine</h2>
       </td>
@@ -363,22 +407,20 @@ that finds any user by its ID.</li>
         <div class='highlight'><pre></pre></div>
       </td>
     </tr>
-    <tr id='section-26'>
+    <tr id='section-29'>
       <td class=docs>
         <!-- <div class="octowrap"> -->
-        <!--   <a class="octothorpe" href="#section-26">#</a> -->
+        <!--   <a class="octothorpe" href="#section-29">#</a> -->
         <!-- </div> -->
         <p> It&rsquo;s actually quite simple:</p>
 
 <pre><code> git clone git://github.com/cyx/shield.git
  [sudo] gem install sinatra
  [sudo] gem install haml
- [sudo] gem install ohm
-
- redis-server
+ [sudo] gem install sequel sqlite3-ruby
 
  cd shield
- ruby examples/sinatra-ohm.rb
+ ruby examples/sinatra-sequel.rb
 </code></pre>
 
       </td>
