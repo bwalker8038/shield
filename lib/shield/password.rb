@@ -1,4 +1,4 @@
-require "digest/sha2"
+require "bcrypt"
 
 module Shield
   module Password
@@ -7,18 +7,16 @@ module Shield
     end
 
     def self.check(password, encrypted)
-      sha512, salt = encrypted.to_s[0..127], encrypted.to_s[128..-1]
-
-      digest(password, salt) == sha512
+      digest(password, salt) == encrypted
     end
 
   private
     def self.digest(password, salt)
-      Digest::SHA512.hexdigest("#{ password }#{ salt }")
+      BCrypt::Engine.hash_secret(password, salt)
     end
 
     def self.generate_salt
-      Digest::SHA512.hexdigest(Time.now.to_f.to_s)[0, 64]
+      BCrypt::Engine.generate_salt
     end
   end
 end
