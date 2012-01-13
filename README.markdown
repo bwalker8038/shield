@@ -12,6 +12,8 @@ _n. A solid piece of metal code used to protect your application._
 
 ## Description of Shield
 
+This is a Fork of Shield that uses the Bcrypt library for encryption.
+
 1. Simple
 2. Doesn't get in the way
 3. Extensible (see [shield-contrib][shield-contrib]).
