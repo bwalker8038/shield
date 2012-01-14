@@ -1,22 +1,17 @@
 require "bcrypt"
 
 module Shield
-  module Password
-    def self.encrypt(password, salt = generate_salt)
-      digest(password, salt) + salt
+  class Password
+
+    self.salt = BCrypt::Engine.generate_salt
+
+    def self.encrypt(password)
+      BCrypt::Engine.hash_secret(password, self.salt)
     end
 
     def self.check(password, encrypted)
-      digest(password, salt) == encrypted
+      encrypted == BCrypt::Engine.hash_secret(password, salt)
     end
 
-  private
-    def self.digest(password, salt)
-      BCrypt::Engine.hash_secret(password, salt)
-    end
-
-    def self.generate_salt
-      BCrypt::Engine.generate_salt
-    end
   end
 end

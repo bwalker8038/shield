@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
-  s.name = "shield"
-  s.version = "0.0.3"
+  s.name = "shield-bcrypt"
+  s.version = "0.0.1"
   s.summary = %{Generic authentication protocol for rack applications.}
   s.description = %Q{
     Provides all the protocol you need in order to do authentication on
