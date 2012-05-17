@@ -9,8 +9,8 @@ module Shield
       BCrypt::Engine.hash_secret(password, self.salt)
     end
 
-    def self.check(password, encrypted)
-      encrypted == BCrypt::Engine.hash_secret(password, salt)
+    def self.check(plaintext, hashed_pw)
+      hashed_pw == encrypt(plaintext)
     end
 
   end
