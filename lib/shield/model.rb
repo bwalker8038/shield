@@ -13,7 +13,7 @@ module Shield
     end
 
     def is_valid_password?(user, password)
-      Shield::Password.check(password, user.crypted_password, user.salt)
+      Shield::Password.check(password, user.crypted_password)
     end
 
     class FetchMissing < Class.new(StandardError)

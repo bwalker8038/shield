@@ -6,7 +6,7 @@ test "encrypt" do
 end
 
 test "with custom 64 character salt" do
-  encrypted = Shield::Password.encrypt("password", "A" * 64)
+  encrypted = Shield::Password.encrypt("password")
   assert Shield::Password.check("password", encrypted)
 end
 
